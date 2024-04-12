@@ -1,6 +1,6 @@
 FROM centos:latest
 
-LABEL maintainer="connectrajdeeproy@gmail.com"
+LABEL maintainer="rajdeeproy173@gmail.com"
 
 RUN yum install -y httpd zip unzip && \
     yum clean all
@@ -15,4 +15,4 @@ RUN unzip photogenic.zip && \
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
-EXPOSE 80
+EXPOSE 80 22
