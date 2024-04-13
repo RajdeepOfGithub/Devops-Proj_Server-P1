@@ -1,26 +1,26 @@
-# Use CentOS Stream 8 for continued updates and support
-FROM centos/stream8
+# Use CentOS latest as the base image
+FROM centos:latest
 
-LABEL maintainer="rajdeeproy173@gmail.com"
+# Set metadata using LABEL
+LABEL maintainer="vikashashoke@gmail.com"
 
-# Ensure the package manager is up to date and install necessary packages
-RUN yum update -y && \
-    yum install -y httpd zip unzip && \
+# Install necessary packages
+RUN yum install -y httpd zip unzip && \
     yum clean all
 
-# Add a remote file directly to the intended directory
+# Add the remote file to the html directory
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
 
 # Set the working directory
 WORKDIR /var/www/html/
 
-# Unzip the downloaded file, organize files, and clean up unnecessary files
+# Unzip the file and move its contents, then clean up
 RUN unzip photogenic.zip && \
     cp -rvf photogenic/* . && \
     rm -rf photogenic photogenic.zip
 
-# Command to run the HTTP server
+# Command to run the httpd server
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
-# Expose the HTTP port and SSH port
-EXPOSE 80 22
+# Expose port 80
+EXPOSE 80
