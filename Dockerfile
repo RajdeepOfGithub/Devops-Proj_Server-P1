@@ -2,7 +2,7 @@
 FROM centos:stream8
 
 # Set metadata using LABEL
-LABEL maintainer="vikashashoke@gmail.com"
+LABEL maintainer="rajdeeproy173@gmail.com"
 
 # Install necessary packages
 RUN yum install -y httpd zip unzip && \
