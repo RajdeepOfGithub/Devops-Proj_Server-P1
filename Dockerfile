@@ -1,12 +1,14 @@
-# Use CentOS Stream 8 as the base image
-FROM centos:stream8
+# Use Ubuntu latest as the base image
+FROM ubuntu:latest
 
 # Set metadata using LABEL
 LABEL maintainer="rajdeeproy173@gmail.com"
 
 # Install necessary packages
-RUN yum install -y httpd zip unzip && \
-    yum clean all
+RUN apt-get update && \
+    apt-get install -y apache2 zip unzip && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Add the remote file to the html directory
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip /var/www/html/
@@ -16,11 +18,11 @@ WORKDIR /var/www/html/
 
 # Unzip the file and move its contents, then clean up
 RUN unzip photogenic.zip && \
-    cp -rvf photogenic/* . && \
+    mv photogenic/* . && \
     rm -rf photogenic photogenic.zip
 
-# Command to run the httpd server
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+# Command to run the Apache server
+CMD ["apache2ctl", "-D", "FOREGROUND"]
 
 # Expose port 80
 EXPOSE 80
