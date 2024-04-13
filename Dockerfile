@@ -1,5 +1,5 @@
-# Use CentOS latest as the base image
-FROM centos:latest
+# Use CentOS Stream 8 as the base image
+FROM centos:stream8
 
 # Set metadata using LABEL
 LABEL maintainer="vikashashoke@gmail.com"
