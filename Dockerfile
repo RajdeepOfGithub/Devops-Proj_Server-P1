@@ -1,5 +1,5 @@
-# Use CentOS Stream for continued updates and support
-FROM centos:stream8
+# Use CentOS Stream 8 for continued updates and support
+FROM centos/stream8
 
 LABEL maintainer="rajdeeproy173@gmail.com"
 
