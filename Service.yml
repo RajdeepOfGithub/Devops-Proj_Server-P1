@@ -1,0 +1,15 @@
+kind: Service                             
+apiVersion: v1
+metadata:
+  name: reslink-depl-pipeline
+  labels:
+    app: reslink-depl-pipeline
+spec:
+  ports:
+    - name: http  # Providing a name for the port for clarity, especially useful when multiple ports are exposed
+      port: 8080  # The port that the service will be accessed on from the outside
+      targetPort: 80  # The port on the pod that the traffic will be directed to
+      nodePort: 31200  # Explicitly defining a nodePort in the range allowed; consider removing if not required to be specific
+  selector:
+    app: reslink-depl-pipeline  # Ensuring that the service targets all pods labeled with app=reslink-depl-pipeline
+  type: LoadBalancer  # This type exposes the service externally using a load balancer provided by the cloud provider

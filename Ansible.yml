@@ -1,0 +1,43 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Manage Kubernetes Resources
+      block:
+        - name: Delete old deployment
+          command: kubectl delete -f /home/ubuntu/Deployment.yml
+          ignore_errors: true  # Continue if the resource is not found
+
+        - name: Delete old service
+          command: kubectl delete -f /home/ubuntu/Service.yml
+          ignore_errors: true  # Continue if the resource is not found
+
+        - name: Create new deployment
+          command: kubectl apply -f /home/ubuntu/Deployment.yml
+          register: deployment_result
+
+        - name: Check deployment status
+          command: kubectl rollout status deployment/mydeployment
+          register: rollout_status
+          until: rollout_status.stdout.find("successfully rolled out") != -1
+          retries: 60
+          delay: 10  # Check every 10 seconds
+
+        - name: Create new service
+          command: kubectl apply -f /home/ubuntu/Service.yml
+          register: service_result
+
+      rescue:
+        - name: Notify deployment failure
+          debug:
+            msg: "Deployment failed. Rolling back."
+          when: deployment_result is failed or service_result is failed
+
+        - name: Rollback deployment
+          command: kubectl rollout undo deployment/mydeployment
+          when: deployment_result is changed
+
+      always:
+        - name: Final notification
+          debug:
+            msg: "Deployment and service operations are complete."
