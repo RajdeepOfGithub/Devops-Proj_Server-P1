@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: reslink_depl_pipeline
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reslink_depl_pipeline
+  template:
+    metadata:
+      labels:
+        app: reslink_depl_pipeline
+    spec:
+      containers:
+      - name: reslink_depl_pipeline
+        image: rajdeep396/Real-time-Devops-Proj_Server-P1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
