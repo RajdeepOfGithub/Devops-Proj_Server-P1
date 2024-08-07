@@ -1,4 +1,4 @@
-# Complete Real-time Deployment on Kubernetes Cluster Using Jenkins CI/CD
+# A Complete Real-time Deployment on Kubernetes Cluster Using Jenkins CI/CD
 
 This project demonstrates a real-time deployment workflow on a Kubernetes cluster utilizing Jenkins CI/CD pipeline. The CI/CD pipeline integrates several tools such as Webhook, Jenkins, Ansible, DockerHub, and a Kubernetes cluster to automate the deployment processes.
 
